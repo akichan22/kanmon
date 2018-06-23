@@ -18,8 +18,12 @@ module Kanmon
 
     desc "close", "Commands about delete rules from SecurityGroup"
     def close
-      @sg.close
-      puts "Success!!"
+      if @exclusion_ips.include?(@sg.ip)
+        puts "The current IP is included in the deletion exclusion list"
+      else
+        @sg.close
+        puts "Success!!"
+      end
     end
 
     desc "ssh HOSTNAME", "Commands about exec ssh"
@@ -46,6 +50,7 @@ module Kanmon
           Kanmon.init_yao
           @config = Kanmon.load_config(options[:kanmon_config])
           @sg = SecurityGroup.new(@config["security_group"])
+          @exclusion_ips = @config["exclusion_ips"]
         end
 
         super
