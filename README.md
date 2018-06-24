@@ -33,3 +33,15 @@ $ kanmon open
 ```
 $ kanmon close
 ```
+
+### option
+
+任意のIPアドレスがSecurity Groupのルールの削除コマンドによって、削除されないように kanmon.yml に定義することができます。
+
+```yaml
+$ cat kanmon.yml
+security_group: 11122233-4444-5555-6666-777788889999
+exclusion_ips:
+  - 192.168.1.1
+  - 192.168.1.254
+```
